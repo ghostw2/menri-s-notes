@@ -1,17 +1,28 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import Quests from "../components/Quests/Quests";
 import Quest from "../components/Quests/Quest/Quest";
 
 const AboutPage = () => {
-    const [quests,setQuests] = useState([
-        { id: 1, title: 'Explore the Forest', description: 'Navigate through the dense forest and discover hidden treasures.' },
-        { id: 2, title: 'Conquer the Mountain', description: 'Climb to the summit of the tallest mountain in the land.' },
-        { id: 3, title: 'Retrieve the Lost Artifact', description: 'Embark on a quest to find a powerful artifact lost in the ancient ruins.' },
-        // Add more quests as needed
-    ]);
+    const [quests,setQuests] = useState([]);
     const deleteQuest = (id) => { 
         setQuests((prevQuests) => prevQuests.filter((quest) => quest.id !== id));
     }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/quests');
+                if (response.data.error === false) { 
+                    setQuests(response.data.data);
+                }
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    },[]);
+    
     return (
         <div className="container">
             <div className="row p-2">

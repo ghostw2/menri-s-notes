@@ -9,7 +9,6 @@ const Quest = ({ quest, onDelete }) => {
     const handleDelete = () => {
         onDelete(quest.id);
     }
-
     return (
         <div className="card col-auto mt-3" >
             <div className="card-header d-flex justify-content-between">
